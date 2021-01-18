@@ -1,0 +1,13 @@
+pandas
+tensorflow
+tensorflow-hub
+numpy
+pyspellchecker
+spellchecker
+nltk
+gensim
+sklearn
+textblob
+notebook
+seaborn
+scipy
