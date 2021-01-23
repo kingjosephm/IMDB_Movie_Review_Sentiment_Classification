@@ -247,8 +247,6 @@ class clean_text:
         text = text.apply(lambda x: re.sub(r"[^A-Za-z0-9^,!?.\/'+]", " ", x)) # keep only regular Latin characters & punctuation
         text = text.apply(lambda x: self.numbers_to_char(x))
         text = text.apply(lambda x: ' '.join(s for s in x.split() if not any(c.isdigit() for c in s))) # remove whole word if alphanumeric
-        text = text.apply(lambda x: re.sub(' +', ' ', x)) # remove extra whitespace between words
-        text = text.str.lstrip().str.rstrip()  # strip any whitespace at end or beginning
         text = text.fillna(value='') # any observations with no text, cast to empty string
 
         if no_stop_words:
@@ -265,5 +263,9 @@ class clean_text:
 
         if min_word_freq is not None:
             text = self.remove_infreq_words(text, min_word_freq)
+
+        # Remove extra whitespace if above introduced any
+        text = text.apply(lambda x: re.sub(' +', ' ', x))  # remove extra whitespace between words
+        text = text.str.lstrip().str.rstrip()  # strip any whitespace at end or beginning
 
         return text
